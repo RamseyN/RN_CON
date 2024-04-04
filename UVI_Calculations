@@ -1,0 +1,161 @@
+# Create a new column Detailed_Split_Sample by combining Detailed.Split and Samples
+seurat_object@meta.data$Detailed_Split_Sample <- paste(seurat_object@meta.data$Detailed.Split, seurat_object@meta.data$Samples, sep = "_")
+
+# Print seurat_object@meta.data to verify the new column
+print(seurat_object@meta.data)
+
+
+# Create a table with counts of each unique value
+table_result <- table(seurat_object@meta.data$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df <- as.data.frame(table_result)
+colnames(table_df) <- c("Detailed_Split_Sample", "Count")
+
+# Print the table
+print(table_df)
+
+########################################################################################################
+# Filter the Seurat object metadata based on the condition RabiesPoz.q95.tot.TrueNeg == TRUE
+filtered_metadata <- seurat_object@meta.data[seurat_object@meta.data$RabiesPoz.q95.tot.TrueNeg == TRUE, ]
+
+# Create a table with counts of each unique value in Detailed_Split_Sample column for filtered metadata
+table_result_true_neg <- table(filtered_metadata$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df_true_neg <- as.data.frame(table_result_true_neg)
+colnames(table_df_true_neg) <- c("Detailed_Split_Sample", "RabiesPoz.q95_TRUE")
+
+# Merge the counts of TrueNeg with the existing table_df
+table_df <- merge(table_df, table_df_true_neg, by = "Detailed_Split_Sample", all.x = TRUE)
+
+# Fill NA values in RabiesPoz.q95_TRUE column with 0
+table_df$RabiesPoz.q95_TRUE[is.na(table_df$RabiesPoz.q95_TRUE)] <- 0
+
+# Print the updated table
+print(table_df)
+
+
+
+########################################################################################################
+# Filter the Seurat object metadata based on the condition RabiesPoz.q95.tot.TrueNeg == FALSE
+filtered_metadata <- seurat_object@meta.data[seurat_object@meta.data$RabiesPoz.q95.tot.TrueNeg == FALSE, ]
+
+# Create a table with counts of each unique value in Detailed_Split_Sample column for filtered metadata
+table_result_true_neg <- table(filtered_metadata$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df_true_neg <- as.data.frame(table_result_true_neg)
+colnames(table_df_true_neg) <- c("Detailed_Split_Sample", "RabiesPoz.q95_FALSE")
+
+# Merge the counts of TrueNeg with the existing table_df
+table_df <- merge(table_df, table_df_true_neg, by = "Detailed_Split_Sample", all.x = TRUE)
+
+# Fill NA values in RabiesPoz.q95_FALSE column with 0
+table_df$RabiesPoz.q95_FALSE[is.na(table_df$RabiesPoz.q95_FALSE)] <- 0
+
+# Print the updated table
+print(table_df)
+
+
+########################################################################################################
+# Filter the Seurat object metadata based on the condition RabiesPoz.q95.tot.TrueNeg == TRUE
+RVTRUE_filtered_metadata <- seurat_object@meta.data[seurat_object@meta.data$RabiesPoz.q95.tot.TrueNeg == TRUE, ]
+
+# Filter the Seurat object metadata to include only non-NA values in UVI.assignment.f0.top
+filtered_metadata_f0 <- RVTRUE_filtered_metadata[!is.na(RVTRUE_filtered_metadata$UVI.assignment.f0.top), ]
+
+# Create a table with counts of each unique value in Detailed_Split_Sample column for filtered metadata
+table_result_f0 <- table(filtered_metadata_f0$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df_f0 <- as.data.frame(table_result_f0)
+colnames(table_df_f0) <- c("Detailed_Split_Sample", "UVI_F0_TRUE")
+
+# Merge the counts of F0 with the existing table_df
+table_df <- merge(table_df, table_df_f0, by = "Detailed_Split_Sample", all.x = TRUE)
+
+# Fill NA values in UVI_F0_TRUE column with 0
+table_df$UVI_F0_TRUE[is.na(table_df$UVI_F0_TRUE)] <- 0
+
+# Print the updated table
+print(table_df)
+#########################################################################################################
+
+# Filter the Seurat object metadata to include only NA values in UVI.assignment.f0.top
+filtered_metadata_f0 <- RVTRUE_filtered_metadata[is.na(RVTRUE_filtered_metadata$UVI.assignment.f0.top), ]
+
+# Create a table with counts of each unique value in Detailed_Split_Sample column for filtered metadata
+table_result_f0 <- table(filtered_metadata_f0$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df_f0 <- as.data.frame(table_result_f0)
+colnames(table_df_f0) <- c("Detailed_Split_Sample", "UVI_F0_NA")
+
+# Merge the counts of F0 with the existing table_df
+table_df <- merge(table_df, table_df_f0, by = "Detailed_Split_Sample", all.x = TRUE)
+
+# Fill NA values in UVI_F0_NA column with 0
+table_df$UVI_F0_NA[is.na(table_df$UVI_F0_NA)] <- 0
+
+# Print the updated table
+print(table_df)
+########################################################################################################################################
+########################################################################################################################################
+########################################################################################################################################
+# Filter the Seurat object metadata based on the condition RabiesPoz.q95.tot.TrueNeg == TRUE
+RVTRUE_filtered_metadata <- seurat_object@meta.data[seurat_object@meta.data$RabiesPoz.q95.tot.TrueNeg == TRUE, ]
+
+# Filter the Seurat object metadata to include only non-NA values in UVI.assignment.f0.top
+filtered_metadata_f4 <- RVTRUE_filtered_metadata[!is.na(RVTRUE_filtered_metadata$UVI.assignment.f4), ]
+
+# Create a table with counts of each unique value in Detailed_Split_Sample column for filtered metadata
+table_result_f4 <- table(filtered_metadata_f4$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df_f4 <- as.data.frame(table_result_f4)
+colnames(table_df_f4) <- c("Detailed_Split_Sample", "UVI_F4_TRUE")
+
+# Merge the counts of F4 with the existing table_df
+table_df <- merge(table_df, table_df_f4, by = "Detailed_Split_Sample", all.x = TRUE)
+
+# Fill NA values in UVI_F4_TRUE column with 0
+table_df$UVI_F4_TRUE[is.na(table_df$UVI_F4_TRUE)] <- 0
+
+# Print the updated table
+print(table_df)
+#########################################################################################################
+# Filter the Seurat object metadata based on the condition RabiesPoz.q95.tot.TrueNeg == TRUE
+RVTRUE_filtered_metadata <- seurat_object@meta.data[seurat_object@meta.data$RabiesPoz.q95.tot.TrueNeg == TRUE, ]
+
+# Filter the Seurat object metadata to include only NA values in UVI.assignment.f0.top
+filtered_metadata_f4 <- RVTRUE_filtered_metadata[is.na(RVTRUE_filtered_metadata$UVI.assignment.f4), ]
+
+# Create a table with counts of each unique value in Detailed_Split_Sample column for filtered metadata
+table_result_f4 <- table(filtered_metadata_f4$Detailed_Split_Sample)
+
+# Convert the table to a data frame for better manipulation and display
+table_df_f4 <- as.data.frame(table_result_f4)
+colnames(table_df_f4) <- c("Detailed_Split_Sample", "UVI_F4_NA")
+
+# Merge the counts of F4 with the existing table_df
+table_df <- merge(table_df, table_df_f4, by = "Detailed_Split_Sample", all.x = TRUE)
+
+# Fill NA values in UVI_F4_NA column with 0
+table_df$UVI_F4_NA[is.na(table_df$UVI_F4_NA)] <- 0
+
+# Print the updated table
+print(table_df)
+
+
+# Extract the numeric part after "_sc" from the Detailed_Split_Samples column
+numeric_part <- as.numeric(sub("^.*_sc([0-9]+).*$", "\\1", table_df$Detailed_Split_Sample))
+
+# Sort table_df based on the extracted numeric part in ascending order
+table_df <- table_df[order(numeric_part),]
+
+# Print the sorted table
+print(table_df)
+
+# Save table_df as a CSV file
+write.csv(table_df, "Detailed_split_Sample.csv", row.names = FALSE)
